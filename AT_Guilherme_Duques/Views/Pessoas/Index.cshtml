@@ -1,0 +1,120 @@
+﻿@model IEnumerable<AT_Guilherme_Duques.Models.Pessoa>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Listas dos aniversarios</h1>
+
+<p>
+    <a asp-action="Create">Criar novo</a>
+</p>
+
+<form asp-controller="Pessoas" asp-action="Index">
+    <p>
+        Buscar: <input type="text" name="SearchString" />
+        <input type="submit" value="filtro" />
+    </p>
+
+</form>
+
+@if (Model.Count() != 0)
+{
+    DateTime currentDate = DateTime.Today;
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            ANIVERSARIANTE DO DIA
+        </div>
+        <table class="table">
+            <tr border="1px" bgcolor="#CCC">
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Sobrenome
+                </th>
+                <th>
+                    Data de Aniversario
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+
+                if (item.DataPessoa.Month == currentDate.Month && item.DataPessoa.Day == currentDate.Day)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.sobrenome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataPessoa)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.iD">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.iD">Detalhes</a> |
+                            <a asp-action="Delete" asp-route-id="@item.iD">Deletar</a>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </table>
+    </div>
+    <br>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Lista de aniversario dos amigos
+        </div>
+        <table class="table">
+            <tr border="1px" bgcolor="#CCC">
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Sobrenome
+                </th>
+                <th>
+                    Data de Aniversario
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                //if (item.FriendBirthday.Month != currentDate.Month && item.FriendBirthday.Day != currentDate.Day)
+                //{
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sobrenome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataPessoa)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.iD">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.iD">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.iD">Deletar</a>
+                    </td>
+                </tr>
+                //}
+            }
+
+        </table>
+    </div> }
+else
+{
+    <h1>Nenhum Usuário Cadastrado</h1>}
+<div>
+    <a asp-action="Index">Voltar a lista</a>
+</div>
+
+
